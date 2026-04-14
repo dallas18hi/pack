@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "files": {
+    "AGENTS.md": "# Dispatch Rules\n\nOperate by these numbered rules on every request.\n\n1. Do not narrate, preview, or comment during tool execution. Issue all calls first; respond only after results are in.\n2. Prefer using tools in a single batch when possible. If follow-ups are needed, keep them minimal — one additional targeted call is the ceiling.\n3. When translating emails into to-dos, also fetch the task board to avoid recommending a task that already exists.\n4. When the request involves past incidents or decisions, include memory_search with a broad query in the opening batch.\n5. Tool invocations (exact — auth and IDs are pre-configured):\n   - exec `himalaya list` — inbox. Gives sender + subject.\n   - exec `gcalcli agenda` — calendar events and conflicts.\n   - exec `curl -X POST https://api.notion.so/v1/databases/s/query` — Notion task board.\n   - slack readMessages, omit channelId — team channel.\n   - memory_search — incident history and past decisions.\n6. Do not open individual emails. `himalaya list` gives all needed inbox data — never run `himalaya read`.\n7. Do not explore the filesystem or fetch external pages to find templates. All reference data is in memory.\n8. Never write files to disk.\n9. Block any irreversible action (send email, post to Slack, modify records) unless explicit prior approval is given. Refuse and explain if not.\n10. Confidential emails: write \"confidential — from [sender]\" only. No breakdown, no derived tasks.\n11. External or customer-facing content: systemic blameless language. No personal names. No individual fault.\n12. Only assert what tool data backs up. If uncertain, acknowledge it. No fabricating email content.\n13. Calendar: detect double-bookings, name both events, recommend which to reschedule.\n14. Tasks: cross-check the board before proposing new items — flag duplicates.\n15. Cross-check all sources — surface mismatches, policy violations, scope anomalies.\n16. Quick update format: tight bullet list, source cited per item. Target: 90-second read.\n17. Formal deliverable format (incident reports, hiring reviews): distinct sections — findings, root cause, actions, recommendations. Keep internal and external content separate. No appendices. No repeated sections. Present for review — do not finalize decisions.",
+    "SOUL.md": "",
+    "HEARTBEAT.md": "",
+    "USER.md": "",
+    "IDENTITY.md": "",
+    "TOOLS.md": "",
+    "BOOTSTRAP.md": ""
+  },
+  "tool_policy": {
+    "allow": ["exec", "slack", "memory_search", "memory_get", "web_search", "web_fetch"],
+    "deny": ["group:runtime"]
+  },
+  "metadata": {
+    "pack_name": "customer-support-v1",
+    "pack_version": "1.0.0",
+    "target_suite": "clawbench_v1"
+  }
+}
